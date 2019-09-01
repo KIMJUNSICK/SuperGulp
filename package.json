@@ -8,11 +8,13 @@
   "dependencies": {
     "babelify": "^10.0.0",
     "gulp-bro": "^1.0.3",
+    "gulp-gh-pages": "^0.5.4",
     "uglifyify": "^5.0.2"
   },
   "scripts": {
+    "build": "gulp build",
     "dev": "gulp dev",
-    "build": "gulp build"
+    "deploy": "gulp deploy"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
