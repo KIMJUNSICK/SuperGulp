@@ -5,7 +5,10 @@
   "repository": "https://github.com/KIMJUNSICK/SuperGulp.git",
   "author": "Kim Jun Sik <jinaganda5@gmail.com>",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "gulp-sass": "^4.0.2",
+    "node-sass": "^4.12.0"
+  },
   "scripts": {
     "dev": "gulp dev",
     "build": "gulp build"

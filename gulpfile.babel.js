@@ -3,6 +3,7 @@ import gPug from "gulp-pug";
 import image from "gulp-image";
 import del from "del";
 import ws from "gulp-webserver";
+import sass from "gulp-sass";
 
 const routes = {
   pug: {
@@ -13,6 +14,11 @@ const routes = {
   img: {
     src: "src/img/*",
     dest: "build/img"
+  },
+  styles: {
+    src: "src/scss/styles.scss",
+    dest: "build/css",
+    watch: "src/scss/**/*.scss"
   }
 };
 
@@ -28,6 +34,12 @@ const img = () =>
     .pipe(image())
     .pipe(gulp.dest(routes.img.dest));
 
+const styles = () =>
+  gulp
+    .src(routes.styles.src)
+    .pipe(sass().on("error", sass.logError))
+    .pipe(gulp.dest(routes.styles.dest));
+
 const clean = () => del(["build/"]);
 
 const webServer = () =>
@@ -36,11 +48,12 @@ const webServer = () =>
 const watch = () => {
   gulp.watch(routes.pug.watch, pug);
   gulp.watch(routes.img.src, img);
+  gulp.watch(routes.styles.watch, styles);
 };
 
 const prepare = gulp.series([clean, img]);
 
-const assets = gulp.series([pug]);
+const assets = gulp.series([pug, styles]);
 
 const live = gulp.parallel([webServer, watch]);
 
