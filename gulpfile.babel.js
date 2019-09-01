@@ -6,6 +6,8 @@ import ws from "gulp-webserver";
 import sass from "gulp-sass";
 import autoprefixer from "gulp-autoprefixer";
 import miniCSS from "gulp-csso";
+import babel from "babelify";
+import bro from "gulp-bro";
 
 sass.compiler = require("node-sass");
 
@@ -23,6 +25,11 @@ const routes = {
     src: "src/scss/styles.scss",
     dest: "build/css",
     watch: "src/scss/**/*.scss"
+  },
+  js: {
+    src: "src/js/main.js",
+    dest: "build/js",
+    wath: "src/**/*.js"
   }
 };
 
@@ -50,20 +57,33 @@ const styles = () =>
     .pipe(miniCSS())
     .pipe(gulp.dest(routes.styles.dest));
 
+const js = () =>
+  gulp
+    .src(routes.js.src)
+    .pipe(
+      bro({
+        transform: [
+          babel.configure({ presets: ["@babel/preset-env"] }),
+          ["uglifyify", { global: true }]
+        ]
+      })
+    )
+    .pipe(gulp.dest(routes.js.dest));
+
 const clean = () => del(["build/"]);
 
-const webServer = () =>
-  gulp.src("build").pipe(ws({ livereload: true, open: true }));
+const webServer = () => gulp.src("build").pipe(ws({ livereload: true }));
 
 const watch = () => {
   gulp.watch(routes.pug.watch, pug);
   gulp.watch(routes.img.src, img);
   gulp.watch(routes.styles.watch, styles);
+  gulp.watch(routes.js.wath, js);
 };
 
 const prepare = gulp.series([clean, img]);
 
-const assets = gulp.series([pug, styles]);
+const assets = gulp.series([pug, styles, js]);
 
 const live = gulp.parallel([webServer, watch]);
 
