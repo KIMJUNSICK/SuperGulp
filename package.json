@@ -1,0 +1,16 @@
+{
+  "name": "supergulp",
+  "version": "1.0.0",
+  "description": "Learn Gulp with Nico",
+  "repository": "https://github.com/KIMJUNSICK/SuperGulp.git",
+  "author": "Kim Jun Sik <jinaganda5@gmail.com>",
+  "license": "MIT",
+  "dependencies": {},
+  "scripts": {
+    "dev": "gulp dev",
+    "build": "gulp build"
+  },
+  "devDependencies": {
+    "gulp": "^4.0.2"
+  }
+}
